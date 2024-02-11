@@ -1,21 +1,65 @@
 import "./App.css";
-import LoginButton from "./components/LoginButton";
-import LogoutButton from "./components/LogoutButton";
-import Profile from "./Profile.js";
 import { useAuth0 } from "@auth0/auth0-react";
+import Profile from "./Profile";
+import axios from 'axios';
 
 function App() {
-  const { isAuthenticated, isLoading } = useAuth0();
+  const { 
+    loginWithPopup,
+    loginWithRedirect,
+    logout,
+    user,
+    isAuthenticated,
+    isLoading,
+    getAccessTokenSilently,
+   } = useAuth0();
+
+   function callApi() {
+    //Calls /
+    axios.get('http://localhost:4000/')
+    .then(response => console.log(response.data))
+    .catch(error => console.log(error.message))
+   }
+
+   async function callProtectedApi() {
+    try {
+      // Se manda el token en el header
+      const token = await getAccessTokenSilently();
+      console.log("Access_token: " + token);
+      const response = await axios.get('http://localhost:4000/protected', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+   }
 
   if (isLoading) {
-    return <h1>Is Loading</h1>
+    return <h1>Cargando...</h1>
   }
 
   return (
     <div className="App">
       <h1>Auth0 Example</h1>
-      {isAuthenticated ? <LogoutButton /> : <LoginButton />}
-      <Profile />
+
+      <button onClick={loginWithPopup}>Login con Popup</button>
+      <br></br>
+      <button onClick={loginWithRedirect}>Login con redirect</button>
+      <br></br>
+      <button onClick={logout}>Logout</button>
+      <br></br>
+      <button onClick={callApi}>Llamar API Route</button>
+      <br></br>
+      <button onClick={callProtectedApi}>Llamar Protect API Route</button>
+
+
+      <h3>El usuario {isAuthenticated ? "esta autenticado" : "no esta autenticado"}</h3>
+      { isAuthenticated && (
+        <Profile />
+      )}
     </div>
   );
 }
