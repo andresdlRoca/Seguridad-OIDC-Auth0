@@ -68,3 +68,13 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+### `Implementation`
+
+- Un flujo interactivo para aplicaciones Web o SPA. Para esto tienen que crear el app y conectarlo a algún servicio de OpenID connect como Azure Active Directory o Auth0. Les recomiendo que instalen Thunder Client en VS Code para hacer sus pruebas.
+- [x] Su app debe tener una parte pública y una privada que solo pueda ser accedido usando el access_token
+- [ ] El access_token debe ser válido
+
+- Un flujo no interactivo para servicios/deamons. Para esto deben implementar un request en postman para autenticarse, el endpoint les debe devolver un access_token.
+  - [ ] El access_token debe ser válido.
+  - [ ] Deben implementar un endpoint en un API que requiera el access_token para poder consultarlo.
