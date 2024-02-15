@@ -1,9 +1,11 @@
 require('dotenv').config();
 const express = require('express');
+const cors = require('cors');
 const { expressjwt: jwt } = require('express-jwt');
 const jwksRsa = require('jwks-rsa');
 
 const app = express();
+app.use(cors());
 
 const checkJwt = jwt({
   secret: jwksRsa.expressJwtSecret({
@@ -17,15 +19,30 @@ const checkJwt = jwt({
   algorithms: ['RS256'],
 });
 
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send(err.message);
+})
+
 // Public endpoint
 app.get('/', (req, res) => {
-  res.send('Hello, this is a public endpoint!');
+    try {
+        res.send('Hola, este es un endpoint público!');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send(error.message);
+    }
 });
 
 // Protected endpoint
 app.get('/protected', checkJwt, (req, res) => {
-  res.send('Hello, this is a protected endpoint!');
+    try {
+        res.send('Hola, este es un endpoint protegido!');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send(error.message);
+    }
 });
 
-const port = process.env.PORT || 4000;
-app.listen(port, () => console.log(`API listening on port ${port}`));
+
+app.listen(4000, () => console.log(`API listening on port ${4000}`));
