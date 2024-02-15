@@ -17,7 +17,10 @@ function App() {
    function callApi() {
     //Calls /
     axios.get('http://localhost:4000/')
-    .then(response => console.log(response.data))
+    .then(response => {
+      console.log(response.data);
+      alert(response.data);
+    })
     .catch(error => console.log(error.message))
    }
 
@@ -26,14 +29,19 @@ function App() {
       // Se manda el token en el header
       const token = await getAccessTokenSilently();
       console.log("Access_token: " + token);
-      const response = await axios.get('http://localhost:4000/protected', {
+      await axios.get('http://localhost:4000/protected', {
         headers: {
           Authorization: `Bearer ${token}`
         }
+      }).then(response => {
+        console.log(response.data);
+        alert("Hola desde la ruta protegida");
       });
-      console.log(response.data);
+      // console.log(response.data);
     } catch (error) {
       console.error(error);
+      const error_string = "Error: " + error.message;
+      alert(error_string);
     }
    }
 

@@ -29,8 +29,6 @@ app.get('/', (req,res) => {
 
 app.get('/protected', async(req,res) => {
     try{
-
-    
         const accessToken = req.headers.authorization.split(' ')[1];
         const response = await axios.get('https://dev-spdnexpuf8hzfcfu.us.auth0.com/userinfo', {
             headers: {
