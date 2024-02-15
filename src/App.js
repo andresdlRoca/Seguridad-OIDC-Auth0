@@ -53,11 +53,11 @@ function App() {
     <div className="App">
       <h1>Auth0 Example</h1>
 
-      <button onClick={loginWithPopup}>Login con Popup</button>
+      <button onClick={loginWithPopup} disabled={isAuthenticated}>Login con Popup</button>
       <br></br>
-      <button onClick={loginWithRedirect}>Login con redirect</button>
+      <button onClick={loginWithRedirect} disabled={isAuthenticated}>Login con redirect</button>
       <br></br>
-      <button onClick={logout}>Logout</button>
+      <button onClick={logout} disabled={!isAuthenticated}>Logout</button>
       <br></br>
       <button onClick={callApi}>Llamar API Route</button>
       <br></br>
