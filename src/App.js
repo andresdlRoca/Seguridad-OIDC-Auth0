@@ -61,7 +61,7 @@ function App() {
       <br></br>
       <button onClick={callApi}>Llamar API Route</button>
       <br></br>
-      <button onClick={callProtectedApi}>Llamar Protect API Route</button>
+      <button onClick={callProtectedApi}>Llamar Protect API Route / Verificacion JWT</button>
 
 
       <h3>El usuario {isAuthenticated ? "esta autenticado" : "no esta autenticado"}</h3>
